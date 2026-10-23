@@ -1,0 +1,12 @@
+BONHEUR PARFAITE — SITE DE DÉMARRAGE
+
+Ouvrez index.html dans un navigateur pour tester le site.
+Les neuf collections et motifs sont des exemples : remplacez-les par les photos, prix, tailles et stocks réels de vos pagnes.
+
+Coordonnées configurées :
+WhatsApp/téléphone : +225 05 66 01 51 74
+E-mail : mfesdona025@gmail.com
+
+IMPORTANT :
+Le formulaire ouvre WhatsApp avec la demande préremplie. Le client doit appuyer sur Envoyer.
+Cette maquette n'envoie pas automatiquement une notification par SMS, e-mail et WhatsApp en arrière-plan. Pour cela, il faut héberger le site et connecter un serveur ou service de formulaires et des services de messagerie. Elle ne comprend pas encore les paiements en ligne, le stock dynamique ou le suivi des commandes.
