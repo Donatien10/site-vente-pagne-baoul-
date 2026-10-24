@@ -1,200 +1,373 @@
 
+/* =========================================
+   BONHEUR PARFAITE - SCRIPT COMPLET
+   ========================================= */
+
 const PRICE = 18500;
 const WHATSAPP = "225566015174";
 
+// Photos disponibles dans le dossier images-premier pagnes
+const IMAGE_FOLDER = "./images-premier%20pagnes/";
 
-const grid = document.getElementById('grid');
-const sel = document.getElementById('collection');
-const cart = {};
+const photos = [
+  "me%20ni%20ti%20koun.jpg",
+  "images%202.jpeg",
+  "images%203.jpeg",
+  "images%204.jpeg",
+  "image%205.jpg",
+  "images6.jpeg",
+  "images7.jpeg",
+  "images8.jpeg",
+  "images9.jpeg",
+  "images10.jpeg",
+  "images11.jpeg",
+  "images12.jpeg",
+  "images13.jpeg",
+  "images14.jpeg",
+  "images15.jpeg",
+  "images16.jpeg",
+  "images17.jpeg",
+  "images18.jpeg",
+  "images19.jpeg",
+  "images20.jpeg",
+  "images21.jpeg",
+  "images22.jpeg",
+  "images23.jpeg"
+];
+
+// Données des collections
+const data = photos.map((photo, index) => [
+  `Collection ${index + 1}`,
+  "Pagne Baoulé traditionnel",
+  ["#923d2e", "#285d55", "#c69b47", "#302725"][index % 4],
+  ["#c69b47", "#f1dfbc", "#923d2e", "#d2a64d"][index % 4],
+  photo
+]);
 
 const money = amount =>
-  new Intl.NumberFormat('fr-FR').format(amount) + ' FCFA';
+  new Intl.NumberFormat("fr-FR").format(amount) + " FCFA";
 
-// Création des collections et des options du formulaire
-data.forEach((item, index) => {
-  const number = index + 1;
+/* =========================================
+   DIAPORAMA AUTOMATIQUE DE LA BANNIÈRE
+   ========================================= */
 
-  const option = document.createElement('option');
-  option.value = item[0];
-  option.textContent = item[0];
-  sel.appendChild(option);
+function startSlideshow() {
+  const slides = document.querySelectorAll(".cloth .slide");
 
-  const card = document.createElement('article');
-  card.className = 'card';
+  if (slides.length < 2) return;
 
-  card.innerHTML = `
-    <div class="pagne-photo">
-      <img
-        class="pagne-face face-avant"
-        src="images/pagne-baoule-${number}.jpg"
-        alt="${item[0]} - face avant"
-        loading="lazy"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
-      >
+  let currentSlide = 0;
 
-      <div class="pagne-placeholder"
-           style="display:none;background:linear-gradient(120deg,${item[2]} 0 50%,${item[3]} 50%)">
-        <span>${item[0]}</span>
-      </div>
+  slides.forEach((slide, index) => {
+    slide.classList.toggle("active", index === 0);
+  });
 
-      <img
-        class="pagne-face face-dos"
-        src="images/pagne-baoule-${number}-dos.jpg"
-        alt="${item[0]} - face arrière"
-        loading="lazy"
-        onerror="this.style.display='none';"
-      >
-    </div>
+  setInterval(() => {
+    slides[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add("active");
+  }, 3000);
+}
 
-    <div class="card-content">
-      <small>COLLECTION ${String(number).padStart(2, '0')}</small>
-      <h3>${item[0]}</h3>
-      <p>${item[1]} · Couleurs et motifs à découvrir</p>
-      <span class="price">${money(PRICE)}</span>
-      <button class="btn" type="button" data-add="${index}">
-        Ajouter au panier
-      </button>
-    </div>
-  `;
+/* =========================================
+   INITIALISATION DES COLLECTIONS
+   ========================================= */
 
-  grid.appendChild(card);
-});
+const grid = document.getElementById("grid");
+const sel = document.getElementById("collection");
+const cart = {};
 
-// Panier
+function renderCollections() {
+  if (!grid || !sel) {
+    console.error("Élément #grid ou #collection introuvable.");
+    return;
+  }
+
+  // Évite de créer les collections plusieurs fois
+  grid.innerHTML = "";
+
+  // Supprime les options déjà présentes, sauf la première
+  while (sel.options.length > 1) {
+    sel.remove(1);
+  }
+
+  data.forEach((item, index) => {
+    const number = index + 1;
+
+    const option = document.createElement("option");
+    option.value = item[0];
+    option.textContent = item[0];
+    sel.appendChild(option);
+
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const photoBox = document.createElement("div");
+    photoBox.className = "pagne-photo";
+
+    const front = document.createElement("img");
+    front.className = "pagne-face face-avant";
+    front.src = IMAGE_FOLDER + item[4];
+    front.alt = item[0] + " - face avant";
+    front.loading = "lazy";
+
+    const placeholder = document.createElement("div");
+    placeholder.className = "pagne-placeholder";
+    placeholder.style.display = "none";
+    placeholder.style.background =
+      `linear-gradient(120deg, ${item[2]} 0 50%, ${item[3]} 50%)`;
+
+    const placeholderText = document.createElement("span");
+    placeholderText.textContent = item[0];
+    placeholder.appendChild(placeholderText);
+
+    front.addEventListener("error", () => {
+      front.style.display = "none";
+      placeholder.style.display = "grid";
+    });
+
+    photoBox.appendChild(front);
+    photoBox.appendChild(placeholder);
+
+    const content = document.createElement("div");
+    content.className = "card-content";
+
+    const label = document.createElement("small");
+    label.textContent = "COLLECTION " + String(number).padStart(2, "0");
+
+    const title = document.createElement("h3");
+    title.textContent = item[0];
+
+    const description = document.createElement("p");
+    description.textContent =
+      item[1] + " · Couleurs et motifs à découvrir";
+
+    const price = document.createElement("span");
+    price.className = "price";
+    price.textContent = money(PRICE);
+
+    const addButton = document.createElement("button");
+    addButton.type = "button";
+    addButton.className = "btn";
+    addButton.dataset.add = index;
+    addButton.textContent = "Ajouter au panier";
+
+    content.append(label, title, description, price, addButton);
+    card.append(photoBox, content);
+    grid.appendChild(card);
+  });
+}
+
+/* =========================================
+   GESTION DU PANIER
+   ========================================= */
+
 function renderCart() {
-  const root = document.getElementById('cart-items');
+  const root = document.getElementById("cart-items");
+  const countElement = document.getElementById("cart-count");
+  const totalElement = document.getElementById("cart-total");
+
+  if (!root || !countElement || !totalElement) return;
+
   const ids = Object.keys(cart).filter(id => cart[id] > 0);
   const count = ids.reduce((sum, id) => sum + cart[id], 0);
 
-  document.getElementById('cart-count').textContent = count;
-  document.getElementById('cart-total').textContent = money(count * PRICE);
+  countElement.textContent = count;
+  totalElement.textContent = money(count * PRICE);
 
   if (ids.length === 0) {
     root.innerHTML = '<p class="empty-cart">Votre panier est vide.</p>';
     return;
   }
 
-  root.innerHTML = '';
+  root.innerHTML = "";
 
   ids.forEach(id => {
     const item = data[Number(id)];
-    const row = document.createElement('div');
-    row.className = 'cart-row';
+    if (!item) return;
 
-    row.innerHTML = `
-      <div>
-        <h3>${item[0]}</h3>
-        <small>${money(PRICE)} par pagne</small>
-      </div>
+    const row = document.createElement("div");
+    row.className = "cart-row";
 
-      <div class="quantity">
-        <button type="button" data-minus="${id}" aria-label="Diminuer">−</button>
-        <strong>${cart[id]}</strong>
-        <button type="button" data-plus="${id}" aria-label="Augmenter">+</button>
-      </div>
+    const details = document.createElement("div");
 
-      <strong>${money(cart[id] * PRICE)}</strong>
+    const title = document.createElement("h3");
+    title.textContent = item[0];
 
-      <button class="remove-btn" type="button" data-remove="${id}">
-        Retirer
-      </button>
-    `;
+    const unitPrice = document.createElement("small");
+    unitPrice.textContent = money(PRICE) + " par pagne";
 
+    details.append(title, unitPrice);
+
+    const quantity = document.createElement("div");
+    quantity.className = "quantity";
+
+    const minus = document.createElement("button");
+    minus.type = "button";
+    minus.dataset.minus = id;
+    minus.setAttribute("aria-label", "Diminuer la quantité");
+    minus.textContent = "−";
+
+    const quantityValue = document.createElement("strong");
+    quantityValue.textContent = cart[id];
+
+    const plus = document.createElement("button");
+    plus.type = "button";
+    plus.dataset.plus = id;
+    plus.setAttribute("aria-label", "Augmenter la quantité");
+    plus.textContent = "+";
+
+    quantity.append(minus, quantityValue, plus);
+
+    const subtotal = document.createElement("strong");
+    subtotal.textContent = money(cart[id] * PRICE);
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "remove-btn";
+    remove.dataset.remove = id;
+    remove.textContent = "Retirer";
+
+    row.append(details, quantity, subtotal, remove);
     root.appendChild(row);
   });
 }
 
-// Ajouter au panier
-grid.addEventListener('click', event => {
-  const button = event.target.closest('[data-add]');
-  if (!button) return;
+/* =========================================
+   AJOUT AU PANIER
+   ========================================= */
 
-  const id = button.dataset.add;
-  cart[id] = (cart[id] || 0) + 1;
-  renderCart();
-});
+if (grid) {
+  grid.addEventListener("click", event => {
+    const button = event.target.closest("[data-add]");
+    if (!button) return;
 
-// Modifier ou retirer un article
-document.getElementById('cart-items').addEventListener('click', event => {
-  const button = event.target.closest('button');
-  if (!button) return;
+    const id = button.dataset.add;
 
-  if (button.dataset.plus !== undefined) {
-    const id = button.dataset.plus;
     cart[id] = (cart[id] || 0) + 1;
-  }
+    renderCart();
+  });
+}
 
-  if (button.dataset.minus !== undefined) {
-    const id = button.dataset.minus;
-    cart[id] = Math.max(0, (cart[id] || 0) - 1);
-  }
+/* =========================================
+   MODIFICATION DU PANIER
+   ========================================= */
 
-  if (button.dataset.remove !== undefined) {
-    delete cart[button.dataset.remove];
-  }
+const cartRoot = document.getElementById("cart-items");
 
-  renderCart();
-});
+if (cartRoot) {
+  cartRoot.addEventListener("click", event => {
+    const button = event.target.closest("button");
+    if (!button) return;
 
-// Commander le panier sur WhatsApp
-document.getElementById('checkout').addEventListener('click', () => {
-  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+    if (button.dataset.plus !== undefined) {
+      const id = button.dataset.plus;
+      cart[id] = (cart[id] || 0) + 1;
+    }
 
-  if (!ids.length) {
-    alert('Votre panier est vide. Ajoutez un pagne avant de commander.');
-    return;
-  }
+    if (button.dataset.minus !== undefined) {
+      const id = button.dataset.minus;
+      cart[id] = Math.max(0, (cart[id] || 0) - 1);
+    }
 
-  const lines = ids.map(id =>
-    `${data[Number(id)][0]} : ${cart[id]} x ${PRICE} FCFA = ${cart[id] * PRICE} FCFA`
-  );
+    if (button.dataset.remove !== undefined) {
+      delete cart[button.dataset.remove];
+    }
 
-  const count = ids.reduce((sum, id) => sum + cart[id], 0);
-  const total = count * PRICE;
+    renderCart();
+  });
+}
 
-  const message = [
-    'Bonjour Bonheur Parfaite, voici ma commande :',
-    ...lines,
-    `Quantité totale : ${count} pagne(s)`,
-    `Total estimé : ${money(total)}`,
-    'Merci de me confirmer la disponibilité et la livraison.'
-  ].join('\n');
+/* =========================================
+   COMMANDE DU PANIER SUR WHATSAPP
+   ========================================= */
 
-  window.open(
-    `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`,
-    '_blank'
-  );
-});
+const checkout = document.getElementById("checkout");
 
-// Formulaire de commande
-document.getElementById('form').addEventListener('submit', event => {
-  event.preventDefault();
+if (checkout) {
+  checkout.addEventListener("click", () => {
+    const ids = Object.keys(cart).filter(id => cart[id] > 0);
 
-  const form = new FormData(event.currentTarget);
-  const quantity = Math.max(
-    1,
-    parseInt(form.get('quantite'), 10) || 1
-  );
+    if (ids.length === 0) {
+      alert("Votre panier est vide. Ajoutez un pagne avant de commander.");
+      return;
+    }
 
-  const message = [
-    'Bonjour Bonheur Parfaite, je souhaite commander.',
-    `Nom : ${form.get('nom')}`,
-    `Téléphone : ${form.get('tel')}`,
-    `Collection : ${form.get('collection')}`,
-    `Couleur : ${form.get('couleur') || 'Non précisée'}`,
-    `Quantité : ${quantity}`,
-    `Prix unitaire : ${money(PRICE)}`,
-    `Total estimé : ${money(quantity * PRICE)}`,
-    `Message : ${form.get('message') || 'Aucun'}`
-  ].join('\n');
+    const lines = ids.map(id => {
+      const item = data[Number(id)];
 
-  window.open(
-    `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`,
-    '_blank'
-  );
-});
+      return `${item[0]} : ${cart[id]} x ${PRICE} FCFA = ${money(cart[id] * PRICE)}`;
+    });
 
-// Année du pied de page
-document.getElementById('year').textContent = new Date().getFullYear();
+    const count = ids.reduce((sum, id) => sum + cart[id], 0);
+    const total = count * PRICE;
 
+    const message = [
+      "Bonjour Bonheur Parfaite, voici ma commande :",
+      "",
+      ...lines,
+      "",
+      `Quantité totale : ${count} pagne(s)`,
+      `Total estimé : ${money(total)}`,
+      "Merci de me confirmer la disponibilité et la livraison."
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  });
+}
+
+/* =========================================
+   FORMULAIRE DE COMMANDE
+   ========================================= */
+
+const orderForm = document.getElementById("form");
+
+if (orderForm) {
+  orderForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const form = new FormData(orderForm);
+    const quantity = Math.max(
+      1,
+      parseInt(form.get("quantite"), 10) || 1
+    );
+
+    const message = [
+      "Bonjour Bonheur Parfaite, je souhaite commander.",
+      `Nom : ${form.get("nom") || ""}`,
+      `Téléphone : ${form.get("tel") || ""}`,
+      `Collection : ${form.get("collection") || ""}`,
+      `Couleur : ${form.get("couleur") || "Non précisée"}`,
+      `Quantité : ${quantity}`,
+      `Prix unitaire : ${money(PRICE)}`,
+      `Total estimé : ${money(quantity * PRICE)}`,
+      `Message : ${form.get("message") || "Aucun"}`
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  });
+}
+
+/* =========================================
+   ANNÉE DU PIED DE PAGE
+   ========================================= */
+
+const yearElement = document.getElementById("year");
+
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
+
+/* =========================================
+   DÉMARRAGE
+   ========================================= */
+
+renderCollections();
 renderCart();
+startSlideshow();
