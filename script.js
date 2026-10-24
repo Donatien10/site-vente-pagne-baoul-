@@ -21,7 +21,10 @@ const cart = {};
 const money = amount =>
   new Intl.NumberFormat('fr-FR').format(amount) + ' FCFA';
 
+// Création des collections et des options du formulaire
 data.forEach((item, index) => {
+  const number = index + 1;
+
   const option = document.createElement('option');
   option.value = item[0];
   option.textContent = item[0];
@@ -31,11 +34,31 @@ data.forEach((item, index) => {
   card.className = 'card';
 
   card.innerHTML = `
-    <div class="swatch"
-      style="background:linear-gradient(120deg,${item[2]} 0 50%,${item[3]} 50%)">
+    <div class="pagne-photo">
+      <img
+        class="pagne-face face-avant"
+        src="images/pagne-baoule-${number}.jpg"
+        alt="${item[0]} - face avant"
+        loading="lazy"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+      >
+
+      <div class="pagne-placeholder"
+           style="display:none;background:linear-gradient(120deg,${item[2]} 0 50%,${item[3]} 50%)">
+        <span>${item[0]}</span>
+      </div>
+
+      <img
+        class="pagne-face face-dos"
+        src="images/pagne-baoule-${number}-dos.jpg"
+        alt="${item[0]} - face arrière"
+        loading="lazy"
+        onerror="this.style.display='none';"
+      >
     </div>
+
     <div class="card-content">
-      <small>COLLECTION 0${index + 1}</small>
+      <small>COLLECTION ${String(number).padStart(2, '0')}</small>
       <h3>${item[0]}</h3>
       <p>${item[1]} · Couleurs et motifs à découvrir</p>
       <span class="price">${money(PRICE)}</span>
@@ -48,6 +71,7 @@ data.forEach((item, index) => {
   grid.appendChild(card);
 });
 
+// Panier
 function renderCart() {
   const root = document.getElementById('cart-items');
   const ids = Object.keys(cart).filter(id => cart[id] > 0);
@@ -73,19 +97,25 @@ function renderCart() {
         <h3>${item[0]}</h3>
         <small>${money(PRICE)} par pagne</small>
       </div>
+
       <div class="quantity">
         <button type="button" data-minus="${id}" aria-label="Diminuer">−</button>
         <strong>${cart[id]}</strong>
         <button type="button" data-plus="${id}" aria-label="Augmenter">+</button>
       </div>
+
       <strong>${money(cart[id] * PRICE)}</strong>
-      <button class="remove-btn" type="button" data-remove="${id}">Retirer</button>
+
+      <button class="remove-btn" type="button" data-remove="${id}">
+        Retirer
+      </button>
     `;
 
     root.appendChild(row);
   });
 }
 
+// Ajouter au panier
 grid.addEventListener('click', event => {
   const button = event.target.closest('[data-add]');
   if (!button) return;
@@ -95,6 +125,7 @@ grid.addEventListener('click', event => {
   renderCart();
 });
 
+// Modifier ou retirer un article
 document.getElementById('cart-items').addEventListener('click', event => {
   const button = event.target.closest('button');
   if (!button) return;
@@ -116,6 +147,7 @@ document.getElementById('cart-items').addEventListener('click', event => {
   renderCart();
 });
 
+// Commander le panier sur WhatsApp
 document.getElementById('checkout').addEventListener('click', () => {
   const ids = Object.keys(cart).filter(id => cart[id] > 0);
 
@@ -145,11 +177,15 @@ document.getElementById('checkout').addEventListener('click', () => {
   );
 });
 
+// Formulaire de commande
 document.getElementById('form').addEventListener('submit', event => {
   event.preventDefault();
 
   const form = new FormData(event.currentTarget);
-  const quantity = Math.max(1, parseInt(form.get('quantite'), 10) || 1);
+  const quantity = Math.max(
+    1,
+    parseInt(form.get('quantite'), 10) || 1
+  );
 
   const message = [
     'Bonjour Bonheur Parfaite, je souhaite commander.',
@@ -169,5 +205,7 @@ document.getElementById('form').addEventListener('submit', event => {
   );
 });
 
+// Année du pied de page
 document.getElementById('year').textContent = new Date().getFullYear();
+
 renderCart();

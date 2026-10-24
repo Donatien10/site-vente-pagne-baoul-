@@ -6,8 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Bonheur Parfaite : pagnes Baoulé à 18 500 FCFA.">
   <title>Bonheur Parfaite | Pagnes Baoulé</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .pagne-image {
+      display: block;
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+  </style>
 </head>
+
 <body>
 
 <header>
@@ -16,6 +41,7 @@
     <b>Bonheur Parfaite</b>
     <small>Pagnes Baoulé • Élégance & tradition</small>
   </div>
+
   <nav>
     <a href="#accueil">Accueil</a>
     <a href="#collections">Collections</a>
@@ -26,10 +52,14 @@
 </header>
 
 <main>
+
 <section class="hero" id="accueil">
   <p>ART DU PAGNE BAOULÉ</p>
   <h1>La tradition qui révèle <em>votre élégance.</em></h1>
-  <p>Découvrez nos collections de pagnes Baoulé aux couleurs riches et aux motifs inspirés du patrimoine ivoirien.</p>
+  <p>
+    Découvrez nos collections de pagnes Baoulé aux couleurs riches
+    et aux motifs inspirés du patrimoine ivoirien.
+  </p>
   <p class="hero-price">Prix unique : <strong>18 500 FCFA</strong></p>
   <a class="btn" href="#collections">Découvrir les collections</a>
   <div class="cloth"></div>
@@ -37,9 +67,111 @@
 
 <section id="collections">
   <p class="eyebrow">Nos sélections</p>
-  <h2>Explorez nos 9 collections</h2>
-  <p class="note">Les motifs sont illustratifs. Ajoutez vos photos réelles pour présenter les pagnes.</p>
-  <div id="grid" class="grid"></div>
+  <h2>Nos 9 collections de pagnes Baoulé</h2>
+  <p class="note">Découvrez nos modèles et choisissez votre collection.</p>
+
+  <div id="grid" class="grid">
+
+    <article class="card">
+      <img class="pagne-image" src="./images-premier pagnes/me ni ti koun.jpg"
+           alt="Pagne Baoulé collection 1" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 1</h3>
+        <p>Rouge & or</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="0">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="./images-premier pagnes/images 2.jpeg"
+           alt="Pagne Baoulé collection 2" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 2</h3>
+        <p>Bleu & ivoire</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="1">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="./images-premier pagnes/images 3.jpeg"
+           alt="Pagne Baoulé collection 3" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 3</h3>
+        <p>Vert & bronze</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="2">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="./images-premier pagnes/images 4.jpeg"
+           alt="Pagne Baoulé collection 4" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 4</h3>
+        <p>Violet & rose</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="3">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="./images-premier pagnes/image 5.jpg"
+           alt="Pagne Baoulé collection 5" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 5</h3>
+        <p>Jaune & noir</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="4">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="images/pagne-baoule-6.jpg"
+           alt="Pagne Baoulé collection 6" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 6</h3>
+        <p>Turquoise & sable</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="5">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="images/pagne-baoule-7.jpg"
+           alt="Pagne Baoulé collection 7" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 7</h3>
+        <p>Orange & indigo</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="6">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="images/pagne-baoule-8.jpg"
+           alt="Pagne Baoulé collection 8" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 8</h3>
+        <p>Blanc & chocolat</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="7">Ajouter au panier</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="pagne-image" src="images/pagne-baoule-9.jpg"
+           alt="Pagne Baoulé collection 9" loading="lazy">
+      <div class="card-content">
+        <h3>Collection 9</h3>
+        <p>Multicolore</p>
+        <strong>18 500 FCFA</strong>
+        <button class="btn" type="button" data-add="8">Ajouter au panier</button>
+      </div>
+    </article>
+
+  </div>
 </section>
 
 <section id="panier" class="cart-section">
@@ -65,11 +197,17 @@
     <p>Remplissez le formulaire pour préparer votre demande sur WhatsApp.</p>
 
     <p><b>WhatsApp 1 :</b><br>
-      <a href="https://wa.me/225566015174" target="_blank" rel="noopener">+225 05 66 01 51 74</a>
+      <a href="https://wa.me/225566015174" target="_blank" rel="noopener">
+        +225 05 66 01 51 74
+      </a>
     </p>
+
     <p><b>WhatsApp 2 :</b><br>
-      <a href="https://wa.me/225758001824" target="_blank" rel="noopener">+225 07 58 00 18 24</a>
+      <a href="https://wa.me/225758001824" target="_blank" rel="noopener">
+        +225 07 58 00 18 24
+      </a>
     </p>
+
     <p><b>E-mail :</b><br>
       <a href="mailto:mfesdona025@gmail.com">mfesdona025@gmail.com</a>
     </p>
@@ -79,21 +217,37 @@
     <label>Nom complet
       <input name="nom" required autocomplete="name">
     </label>
+
     <label>Téléphone
       <input name="tel" type="tel" required autocomplete="tel">
     </label>
+
     <label>Collection
-      <select id="collection" name="collection" required></select>
+      <select id="collection" name="collection" required>
+        <option value="Collection 1">Collection 1</option>
+        <option value="Collection 2">Collection 2</option>
+        <option value="Collection 3">Collection 3</option>
+        <option value="Collection 4">Collection 4</option>
+        <option value="Collection 5">Collection 5</option>
+        <option value="Collection 6">Collection 6</option>
+        <option value="Collection 7">Collection 7</option>
+        <option value="Collection 8">Collection 8</option>
+        <option value="Collection 9">Collection 9</option>
+      </select>
     </label>
+
     <label>Couleur ou motif
       <input name="couleur" placeholder="Ex. bleu, jaune, motifs géométriques">
     </label>
+
     <label>Quantité
       <input name="quantite" type="number" min="1" step="1" value="1" required>
     </label>
+
     <label>Message
       <textarea name="message" rows="3"></textarea>
     </label>
+
     <button class="btn" type="submit">Envoyer sur WhatsApp</button>
     <small>WhatsApp ouvrira un message prérempli. Vous devez appuyer sur Envoyer.</small>
   </form>
@@ -106,6 +260,7 @@
   <a class="btn light" href="https://wa.me/225758001824" target="_blank" rel="noopener">WhatsApp 2</a>
   <a class="btn light" href="mailto:mfesdona025@gmail.com">E-mail</a>
 </section>
+
 </main>
 
 <footer>
