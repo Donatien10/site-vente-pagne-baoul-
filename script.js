@@ -2,17 +2,6 @@
 const PRICE = 18500;
 const WHATSAPP = "225566015174";
 
-const data = [
-  ['Collection 1', 'Rouge & or', '#923d2e', '#c69b47'],
-  ['Collection 2', 'Bleu & ivoire', '#174e67', '#e8ddc5'],
-  ['Collection 3', 'Vert & bronze', '#315b45', '#b68a43'],
-  ['Collection 4', 'Violet & rose', '#6d3f68', '#d7a1ae'],
-  ['Collection 5', 'Jaune & noir', '#d8a92e', '#292323'],
-  ['Collection 6', 'Turquoise & sable', '#168c8b', '#e5c9a2'],
-  ['Collection 7', 'Orange & indigo', '#d56c32', '#35366d'],
-  ['Collection 8', 'Blanc & chocolat', '#f1e7d8', '#5b332a'],
-  ['Collection 9', 'Multicolore', '#b83e47', '#2e7771']
-];
 
 const grid = document.getElementById('grid');
 const sel = document.getElementById('collection');
