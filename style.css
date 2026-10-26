@@ -558,3 +558,184 @@ footer {
     transition-duration: 0.01ms !important;
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap');
+
+:root {
+  --rust: #923d2e;
+  --gold: #c69b47;
+  --ink: #302725;
+  --cream: #fbf5ed;
+  --muted: #766c66;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ANIMATION DES COULEURS DE L'ACCUEIL */
+
+.hero-content {
+    animation: couleurContenu 9s infinite;
+    transition: background-color 1s ease;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+@keyframes couleurContenu {
+    0%, 100% {
+        background-color: #ff6b6b;
+    }
+    33% {
+        background-color: #2575fc;
+    }
+    66% {
+        background-color: #00b894;
+    }
+}
+
+/* Respect des préférences d'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    .hero-content {
+        animation: none;
+    }
+}
+
+/* EFFET LUMINEUX PROGRESSIF SUR LES ÉCRITURES */
+
+.hero-content .eyebrow {
+    animation: lumiereTexte 3s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.hero-content h1 {
+    animation: lumiereTexte 3s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.hero-content h1 em {
+    animation: lumiereMot 3s ease-in-out infinite;
+    animation-delay: 0.8s;
+}
+
+.hero-content > p:not(.eyebrow):not(.hero-price) {
+    animation: lumiereTexte 3s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.hero-content .hero-price {
+    animation: lumiereTexte 3s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+.hero-content .btn {
+    animation: lumiereBouton 3s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+/* Lumière qui apparaît puis s'atténue */
+@keyframes lumiereTexte {
+    0%, 100% {
+        opacity: 0.65;
+        text-shadow: 0 0 0 transparent;
+    }
+
+    50% {
+        opacity: 1;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+    }
+}
+
+/* Éclat doré sur le mot pagne Baoulé */
+@keyframes lumiereMot {
+    0%, 100% {
+        text-shadow: 0 0 2px rgba(198, 155, 71, 0.2);
+    }
+
+    50% {
+        text-shadow:
+            0 0 8px #f5d98b,
+            0 0 18px #c69b47;
+    }
+}
+
+/* Le bouton s'illumine progressivement */
+@keyframes lumiereBouton {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(198, 155, 71, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(198, 155, 71, 0.9);
+    }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    .hero-content .eyebrow,
+    .hero-content h1,
+    .hero-content h1 em,
+    .hero-content > p,
+    .hero-content .hero-price,
+    .hero-content .btn {
+        animation: none;
+    }
+}
+
+/* PRIX DES PAGNES : EFFET LUMINEUX CLIGNOTANT */
+
+.price,
+.hero-price strong,
+.cart-total strong {
+    animation: prixIllumine 1.8s ease-in-out infinite;
+    font-weight: 700;
+}
+
+/* Les prix s'allument puis s'atténuent */
+@keyframes prixIllumine {
+    0%, 100% {
+        opacity: 0.45;
+        text-shadow: 0 0 2px rgba(198, 155, 71, 0.2);
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        text-shadow:
+            0 0 5px #ffd978,
+            0 0 12px #c69b47,
+            0 0 20px rgba(198, 155, 71, 0.7);
+        transform: scale(1.06);
+    }
+}
+
+/* Les prix des cartes restent bien visibles */
+.price {
+    display: inline-block;
+    color: #923d2e;
+    transform-origin: left center;
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    .price,
+    .hero-price strong,
+    .cart-total strong {
+        animation: none;
+        opacity: 1;
+    }
+}
